@@ -1,6 +1,7 @@
 import express from 'express';
 import authRoutes from './routes/auth.route.js';
 import messageRoutes from './routes/message.route.js';
+import cors from 'cors';
 
 
 import dotenv from 'dotenv';
@@ -12,6 +13,10 @@ const app = express();
 app.use(express.json());
 
 const PORT = process.env.PORT || 5001;
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+}));
 
 app.use(cookieParser());
 app.use("/api/auth",authRoutes)
