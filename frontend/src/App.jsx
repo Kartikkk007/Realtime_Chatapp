@@ -8,11 +8,13 @@ import ProfilePage from "./pages/ProfilePage";
 import { Routes, Route } from "react-router-dom";
 import { use, useEffect } from "react";
 import { useAuthStore } from "./store/useAuthStore";
+import { useThemeStore } from "./store/useThemeStore";
 import {Loader} from "lucide-react"
 import { Toaster } from "react-hot-toast";
  
 const App = () => {
  const {authUser, checkAuth, isCheckingAuth} = useAuthStore(); 
+ const {theme} = useThemeStore();
 
  useEffect(() => {
   checkAuth();
@@ -27,14 +29,14 @@ const App = () => {
  )
 
   return (
-    <div>
+    <div data-theme={theme} className="min-h-screen">
       <Navbar />
       <Routes>
         <Route path="/" element={authUser ? <HomePage /> : <LoginPage />} />
         <Route path="/signup" element={!authUser ? <SignUpPage /> : <HomePage />} />
         <Route path="/login" element={!authUser ? <LoginPage /> : <HomePage />} />
+        <Route path="/settings" element={<SettingsPage />} />
         <Route path="/profile" element={authUser ? <ProfilePage /> : <LoginPage />} />
-        <Route path="/chat" element={<SettingsPage />} />
       </Routes>
       <Toaster/>
     </div>
